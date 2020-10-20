@@ -8,6 +8,7 @@ namespace TupleStringCompare
     {
         static void Main(string[] args)
         {
+            //Use Jagged array instead of Tuple array because remove initilization of empty member.
             string[][] synonyms = new string[2][];
             synonyms[0] = new string[] { "rate", "ratings", "rates" };
             synonyms[1] = new string[] { "approval", "popularity" };
@@ -18,6 +19,7 @@ namespace TupleStringCompare
                 new Tuple<string, string>("obama approval rating", "obama TV ratings"),
                 new Tuple<string, string>("obama approval rate", "popularity ratings obama")};
 
+            //initial results to be all true first.
             bool[] results = Enumerable.Repeat(true, 4).ToArray();
 
             int i = 0;
@@ -25,9 +27,7 @@ namespace TupleStringCompare
             {
                 foreach(string[] synonym in synonyms)
                 {
-                    bool first = synonym.Any(query.Item1.Contains);
-                    bool second = synonym.Any(query.Item2.Contains);
-                    results[i] &= first && second;
+                    results[i] &= synonym.Any(query.Item1.Contains) && synonym.Any(query.Item2.Contains);
                 }
                 i++;
             }
